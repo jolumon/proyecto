@@ -1,5 +1,5 @@
 # proyecto
-Proyecto del ciclo superior de informática: Desarrollo de aplicaciones multiplataforma.
+Proyecto del ciclo de grado superior de informática: Desarrollo de aplicaciones multiplataforma.
 
 
  Se trata de un software de gestión de laboratorios cosméticos. Se podrá acceder a productos, materias primas, proveedores y clientes del laboratorio.
