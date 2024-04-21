@@ -1,9 +1,9 @@
 import sys
 
 from clientes.model.ventana_clientes import VentanaCliente
-#from materias_primas.model.ventana_mp import VentanaMateriasPrimas
+from materias_primas.model.ventana_mp import VentanaMateriasPrimas
 from proveedores.model.ventana_proveedores import VentanaProveedor
-#from productos.model.ventana_productos import VentanaProducto
+from productos.model.ventana_productos import VentanaProducto
 from PySide6.QtWidgets import QMainWindow, QApplication
 from PySide6.QtGui import QCloseEvent
 from PySide6.QtCore import Qt

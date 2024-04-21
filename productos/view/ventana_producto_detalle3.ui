@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1110</width>
+    <height>758</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Detalle Producto</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton{
+
+	
+	background-color: rgb(6, 191, 249);
+
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab_detalle">
+      <attribute name="title">
+       <string>Detalle</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <layout class="QFormLayout" name="formLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="lbl_codigo_det">
+           <property name="text">
+            <string>Código</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="le_codigo_det">
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="lbl_nombre_det">
+           <property name="text">
+            <string>Nombre</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="le_nombre_det"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="lbl_linea_det">
+           <property name="text">
+            <string>Linea</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="le_linea_det"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="lbl_cliente_det">
+           <property name="text">
+            <string>Cliente</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QComboBox" name="cb_cliente"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_actualizar_det">
+           <property name="text">
+            <string>Actualizar</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_borrar_det">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(254, 20, 20);</string>
+           </property>
+           <property name="text">
+            <string>Borrar</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QTabWidget" name="tabWidget_2">
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="tab">
+          <attribute name="title">
+           <string>Fabricaciones</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <item>
+            <widget class="QTableView" name="tv_fab_historico">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_2">
+          <attribute name="title">
+           <string>Composición</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QTableView" name="tv_composicion_prod"/>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="spacing">
+          <number>9</number>
+         </property>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::MinimumExpanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>13</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_cerrar_det">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(22, 183, 40);</string>
+           </property>
+           <property name="text">
+            <string>Salir</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_fabricacion">
+      <attribute name="title">
+       <string>Nueva fabricación</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <layout class="QFormLayout" name="formLayout_2">
+         <item row="0" column="0">
+          <widget class="QLabel" name="lbl_fecha_fab">
+           <property name="text">
+            <string>Fecha</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="lbl_codigo_fab">
+           <property name="text">
+            <string>Código</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="le_codigo_fab">
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="lbl_produto_fab">
+           <property name="text">
+            <string>Producto</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="le_producto_fab">
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="lbl_cantidad_fab">
+           <property name="text">
+            <string>Cantidad</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLineEdit" name="le_cantidad_fab"/>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="lbl_lote_fab">
+           <property name="text">
+            <string>Lote</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLineEdit" name="le_lote_fab"/>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="lbl_fecha_cad_fab">
+           <property name="text">
+            <string>Fecha Caducidad</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0">
+          <widget class="QLabel" name="lbl_equipo_fab">
+           <property name="text">
+            <string>Equipo</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <widget class="QComboBox" name="cb_equipo_fab"/>
+         </item>
+         <item row="0" column="1">
+          <widget class="QDateEdit" name="de_fecha_fab">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="font">
+            <font>
+             <hintingpreference>PreferVerticalHinting</hintingpreference>
+            </font>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+           <property name="buttonSymbols">
+            <enum>QAbstractSpinBox::NoButtons</enum>
+           </property>
+           <property name="displayFormat">
+            <string>dd/MM/yyyy</string>
+           </property>
+           <property name="calendarPopup">
+            <bool>false</bool>
+           </property>
+           <property name="date">
+            <date>
+             <year>2024</year>
+             <month>1</month>
+             <day>1</day>
+            </date>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QDateEdit" name="de_fecha_cad_fab">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="buttonSymbols">
+            <enum>QAbstractSpinBox::NoButtons</enum>
+           </property>
+           <property name="displayFormat">
+            <string>dd/MM/yyyy</string>
+           </property>
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
+           <property name="date">
+            <date>
+             <year>2024</year>
+             <month>1</month>
+             <day>1</day>
+            </date>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_add_fab">
+           <property name="text">
+            <string>Añadir</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>Pesada</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <widget class="QTableView" name="tv_detalle_new_fab">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_imprimir_fab">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(245, 194, 17);</string>
+           </property>
+           <property name="text">
+            <string>Imprimir</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_cerrar_fab">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(22, 183, 40);</string>
+           </property>
+           <property name="text">
+            <string>Salir</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
