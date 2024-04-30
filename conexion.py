@@ -5,7 +5,7 @@ class Conexion:
     def __init__(self):
         #DATABASE_URL='postgresql://postgres:7taYLsi4hFrE@ep-wandering-sound-a2wgvsk5.eu-central-1.aws.neon.tech/labERP_dam?sslmode=require'
         self.db = QSqlDatabase.addDatabase('QPSQL')
-        self.db.setDatabaseName('labERP2')
+        self.db.setDatabaseName('laberp2')
         self.db.setHostName('localhost')
         #self.db.setHostName(DATABASE_URL)
         self.db.setPort(5432)
