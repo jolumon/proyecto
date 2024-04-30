@@ -65,7 +65,7 @@ class VentanaMateriasPrimas(QWidget, Ui_Form):
 
         query_proveedores = QSqlQuery()
         query_proveedores.prepare(
-            f'select id_prov, nombre_prov from proveedores order by id_prov')
+            f'select id_prov, nombre_prov from proveedores order by nombre_prov')
 
         if query_proveedores.exec():
             while query_proveedores.next():

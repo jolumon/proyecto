@@ -14,12 +14,12 @@ class VentanaDetalle(QWidget, Ui_Form):
 
         self.ventana_mp = ventana_mp
         
-        # Mostrar proveedores en el comboBox
+        # Mostrar proveedores en el comboBox de la pestaña entrada
         self.diccionario_proveedores_entrada = {}
 
         query_proveedores_entrada = QSqlQuery()
         query_proveedores_entrada.prepare(
-            f'select id_prov, nombre_prov from proveedores order by id_prov')
+            f'select id_prov, nombre_prov from proveedores order by nombre_prov')
 
         if query_proveedores_entrada.exec():
             while query_proveedores_entrada.next():
