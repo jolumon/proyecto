@@ -200,7 +200,7 @@ class VentanaProveedor(QWidget, Ui_Form):
 
             self.query_materias_primas = QSqlQuery()
             self.query_materias_primas.prepare(
-                "select mp.id_mp, mp.nombre_mp, mp.cantidad_mp from materias_primas mp inner join entradas e on mp.id_mp=e.id_mp_ent inner join proveedores p on e.id_prov_ent = p.id_prov where p.id_prov = :codigo")
+                "select distinct mp.id_mp,mp.nombre_mp,mp.cantidad_mp  from materias_primas mp inner join entradas ent on mp.id_mp = ent.id_mp_ent inner join proveedores p  on ent.id_prov_ent  = p.id_prov  where p.id_prov =:codigo")
             self.query_materias_primas.bindValue(':codigo', codigo)
             self.query_materias_primas.exec()
 
@@ -269,7 +269,7 @@ class VentanaProveedor(QWidget, Ui_Form):
 
             self.query_materias_primas = QSqlQuery()
             self.query_materias_primas.prepare(
-                "select mp.id_mp, mp.nombre_mp, mp.cantidad_mp from materias_primas mp inner join proveedores p on mp.proveedor_mp = p.id_proveedor where p.id_proveedor = :codigo")
+                "select distinct mp.id_mp,mp.nombre_mp,mp.cantidad_mp  from materias_primas mp inner join entradas ent on mp.id_mp = ent.id_mp_ent inner join proveedores p  on ent.id_prov_ent  = p.id_prov  where p.id_prov = :codigo")
             self.query_materias_primas.bindValue(':codigo', codigo)
             self.query_materias_primas.exec()
 
