@@ -13,6 +13,22 @@ class VentanaDetalle(QWidget, Ui_Form):
         self.showMaximized()
 
         self.ventana_mp = ventana_mp
+        
+        # Mostrar proveedores en el comboBox
+        self.diccionario_proveedores_entrada = {}
+
+        query_proveedores_entrada = QSqlQuery()
+        query_proveedores_entrada.prepare(
+            f'select id_prov, nombre_prov from proveedores order by id_prov')
+
+        if query_proveedores_entrada.exec():
+            while query_proveedores_entrada.next():
+                proveedor_id = query_proveedores_entrada.value(0)
+                nombre = query_proveedores_entrada.value(1)
+                self.cb_proveedor_entrada.addItem(nombre)
+                self.diccionario_proveedores_entrada[nombre] = proveedor_id
+
+        self.cb_proveedor_entrada.setCurrentIndex(-1)
 
         # Signals and Slots pestaña detalle
 
@@ -29,6 +45,15 @@ class VentanaDetalle(QWidget, Ui_Form):
         print(f'Dentror de cierra_pestaña_entrada')
         self.tabWidget.setCurrentIndex(0)
 
+    def obtener_clave_principal(self):
+        nombre_seleccionado = self.cb_proveedor_entrada.currentText()
+        clave_principal = self.diccionario_proveedores_entrada.get(nombre_seleccionado)
+
+        print(f'Nombre seleccionado: {nombre_seleccionado}')
+        print(f'Clave principal: {clave_principal}')
+
+        return clave_principal
+
     def guardar_entrada(self):
         """ Guarda el registro de una nueva entrada en la base de datos """
 
@@ -37,7 +62,9 @@ class VentanaDetalle(QWidget, Ui_Form):
         # Hay que hacer un comboBox para que se pueda elegir el proveedor. Antes al ser solo un proveedor venia impuesto y no hacia falta seleccionarlo porque se ponia por defecto .
         
         
-        id_proveedor = int(self.le_proveedor_entrada.text())
+        
+        id_proveedor = int(self.obtener_clave_principal())
+        print(f'id_proveedor: {id_proveedor}')
         fecha_entrada = str(self.le_f_entrada.text())
         fecha_caducidad = str(self.de_f_caducidad.text())
         lote = self.le_lote_entrada.text()
