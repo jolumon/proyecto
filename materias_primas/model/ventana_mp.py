@@ -154,6 +154,30 @@ class VentanaMateriasPrimas(QWidget, Ui_Form):
             self.ventana_detalle.tv_entradas_mp_det.resizeColumnsToContents()
             self.ventana_detalle.tv_entradas_mp_det.horizontalHeader(
             ).setSectionResizeMode(QHeaderView.Stretch)
+            
+            # Se crea el modelo para mostrar los proveedores de la materia prima
+            self.model4 = QSqlQueryModel()
+            self.model4.setQuery(
+                f'select distinct p.id_prov,p.nombre_prov  from proveedores p inner join entradas ent on p.id_prov=ent.id_prov_ent inner join materias_primas mp on ent.id_mp_ent  = mp.id_mp where mp.id_mp = {codigo}')
+
+            self.model4.setHeaderData(0, Qt.Horizontal, str("Código"))
+            self.model4.setHeaderData(1, Qt.Horizontal, str("Nombre"))
+            
+
+            # Crear una vista de tabla
+            self.ventana_detalle.tv_provs_detalle_mp.setModel(self.model4)
+            self.ventana_detalle.tv_provs_detalle_mp.setEditTriggers(
+                QAbstractItemView.NoEditTriggers)  # Deshabilitar edición
+            self.ventana_detalle.tv_provs_detalle_mp.setSelectionMode(
+                QAbstractItemView.SingleSelection)  # Seleccionar filas completas
+            self.ventana_detalle.tv_provs_detalle_mp.setSelectionBehavior(
+                QAbstractItemView.SelectRows)  # Seleccionar filas completas
+
+            # Configurar la vista de tabla
+            self.ventana_detalle.tv_provs_detalle_mp.resizeRowsToContents()
+            self.ventana_detalle.tv_entradas_mp_det.resizeColumnsToContents()
+            self.ventana_detalle.tv_provs_detalle_mp.horizontalHeader(
+            ).setSectionResizeMode(QHeaderView.Stretch)
 
             self.ventana_detalle.show()
 
