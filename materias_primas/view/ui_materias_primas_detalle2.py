@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'materias_primas_detalle2jkUwQy.ui'
+## Form generated from reading UI file 'materias_primas_detalle2ssgdzN.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.0
 ##
@@ -15,10 +15,11 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QDateEdit, QFormLayout, QFrame,
-    QGroupBox, QHBoxLayout, QHeaderView, QLabel,
-    QLineEdit, QPushButton, QSizePolicy, QSpacerItem,
-    QTabWidget, QTableView, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QDateEdit, QFormLayout,
+    QFrame, QGroupBox, QHBoxLayout, QHeaderView,
+    QLabel, QLineEdit, QPushButton, QSizePolicy,
+    QSpacerItem, QTabWidget, QTableView, QVBoxLayout,
+    QWidget)
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -93,6 +94,18 @@ class Ui_Form(object):
 
 
         self.verticalLayout_3.addLayout(self.horizontalLayout_2)
+
+        self.gb_detalle_mp = QGroupBox(self.tab_detalle)
+        self.gb_detalle_mp.setObjectName(u"gb_detalle_mp")
+        self.verticalLayout_6 = QVBoxLayout(self.gb_detalle_mp)
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.tv_provs_detalle_mp = QTableView(self.gb_detalle_mp)
+        self.tv_provs_detalle_mp.setObjectName(u"tv_provs_detalle_mp")
+
+        self.verticalLayout_6.addWidget(self.tv_provs_detalle_mp)
+
+
+        self.verticalLayout_3.addWidget(self.gb_detalle_mp)
 
         self.groupBox = QGroupBox(self.tab_detalle)
         self.groupBox.setObjectName(u"groupBox")
@@ -177,12 +190,6 @@ class Ui_Form(object):
 
         self.formLayout_2.setWidget(4, QFormLayout.LabelRole, self.lbl_lote_entrada)
 
-        self.le_proveedor_entrada = QLineEdit(self.frame_form)
-        self.le_proveedor_entrada.setObjectName(u"le_proveedor_entrada")
-        self.le_proveedor_entrada.setReadOnly(True)
-
-        self.formLayout_2.setWidget(3, QFormLayout.FieldRole, self.le_proveedor_entrada)
-
         self.le_lote_entrada = QLineEdit(self.frame_form)
         self.le_lote_entrada.setObjectName(u"le_lote_entrada")
         self.le_lote_entrada.setClearButtonEnabled(True)
@@ -196,6 +203,7 @@ class Ui_Form(object):
 
         self.de_f_caducidad = QDateEdit(self.frame_form)
         self.de_f_caducidad.setObjectName(u"de_f_caducidad")
+        self.de_f_caducidad.setCalendarPopup(True)
 
         self.formLayout_2.setWidget(5, QFormLayout.FieldRole, self.de_f_caducidad)
 
@@ -224,8 +232,14 @@ class Ui_Form(object):
 
         self.le_f_entrada = QLineEdit(self.frame_form)
         self.le_f_entrada.setObjectName(u"le_f_entrada")
+        self.le_f_entrada.setReadOnly(True)
 
         self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.le_f_entrada)
+
+        self.cb_proveedor_entrada = QComboBox(self.frame_form)
+        self.cb_proveedor_entrada.setObjectName(u"cb_proveedor_entrada")
+
+        self.formLayout_2.setWidget(3, QFormLayout.FieldRole, self.cb_proveedor_entrada)
 
 
         self.verticalLayout_5.addLayout(self.formLayout_2)
@@ -279,6 +293,7 @@ class Ui_Form(object):
         self.lbl_cantidad_det.setText(QCoreApplication.translate("Form", u"Cantidad", None))
         self.btn_actualizar_det.setText(QCoreApplication.translate("Form", u"Actualizar", None))
         self.btn_borrar_det.setText(QCoreApplication.translate("Form", u"Borrar", None))
+        self.gb_detalle_mp.setTitle(QCoreApplication.translate("Form", u"Proveedores", None))
         self.groupBox.setTitle(QCoreApplication.translate("Form", u"Entradas", None))
         self.btn_cerrar_det.setText(QCoreApplication.translate("Form", u"Cerrar", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_detalle), QCoreApplication.translate("Form", u"Detalle", None))
