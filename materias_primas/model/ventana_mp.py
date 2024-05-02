@@ -16,20 +16,33 @@ class VentanaMateriasPrimas(QWidget, Ui_Form):
         self.showMaximized()
         self.ventana_principal = ventana_principal
 
-        # Crear un modelo de tabla
+        # Crear un model de tabla
 
-        self.model = QSqlTableModel()
-        self.model.setTable('materias_primas')
+        self.initial_query = QSqlQuery()
+        self.initial_query.exec(
+            "SELECT * FROM materias_primas where activo_mp=true order by nombre_mp asc")
+        self.model = QSqlQueryModel()
+        self.model.setQuery(self.initial_query)
+        
+       #Cabeceras de la tabla
+        cabeceras = ['Codigo','Nombre','Cantidad total / kg','Activo']
+        for i,cabecera in enumerate(cabeceras):
+            self.model.setHeaderData(i, Qt.Horizontal,cabecera )
 
-        self.model.select()
+        # # Crear un modelo de tabla
 
-        self.model.setQuery(
-            "SELECT * FROM materias_primas where activo_mp=true order by id_mp asc")
-        self.model.setHeaderData(0, Qt.Horizontal, str("Código"))
-        self.model.setHeaderData(1, Qt.Horizontal, str("Nombre"))
-        self.model.setHeaderData(2, Qt.Horizontal, str("Cantidad total / kg"))
-        # self.model.setHeaderData(3, Qt.Horizontal, str("Proveedor"))
-        self.model.setHeaderData(3, Qt.Horizontal, str("Activo"))
+        # self.model = QSqlTableModel()
+        # self.model.setTable('materias_primas')
+
+        # self.model.select()
+
+        # self.model.setQuery(
+        #     "SELECT * FROM materias_primas where activo_mp=true order by id_mp asc")
+        # self.model.setHeaderData(0, Qt.Horizontal, str("Código"))
+        # self.model.setHeaderData(1, Qt.Horizontal, str("Nombre"))
+        # self.model.setHeaderData(2, Qt.Horizontal, str("Cantidad total / kg"))
+        # # self.model.setHeaderData(3, Qt.Horizontal, str("Proveedor"))
+        # self.model.setHeaderData(3, Qt.Horizontal, str("Activo"))
 
  # Crear un filtro para la búsqueda
         self.proxy_model_mp = QSortFilterProxyModel()
@@ -188,12 +201,12 @@ class VentanaMateriasPrimas(QWidget, Ui_Form):
 
         print(f'Dentro de ver_detalle_producto')
 
-    def obtener_clave_principal(self):
+    def obtener_clave_principal_proveedor(self):
         nombre_seleccionado = self.cb_proveedor_nueva.currentText()
         clave_principal = self.diccionario_proveedores.get(nombre_seleccionado)
 
-        print(f'Nombre seleccionado: {nombre_seleccionado}')
-        print(f'Clave principal: {clave_principal}')
+        # print(f'Nombre seleccionado: {nombre_seleccionado}')
+        # print(f'Clave principal: {clave_principal}')
 
         return clave_principal
 
@@ -205,26 +218,66 @@ class VentanaMateriasPrimas(QWidget, Ui_Form):
         self.ventana_principal.show()
         event.accept()
 
+    def mp_existe(self, nombre):
+        query = QSqlQuery()
+        query.prepare("SELECT COUNT(*) FROM materias_primas WHERE nombre_mp = :nombre")
+        query.bindValue(":nombre", nombre)
+        
+        if not query.exec():
+            print("Error al ejecutar la consulta:", query.lastError().text())
+            return False
+        
+        if query.next():
+            count = query.value(0)
+            return count > 0
+        else:
+            print("Error: No se obtuvieron resultados de la consulta.")
+            return False
+
+    
     def guardar_nueva_mp(self):
+        
         # Recuperar datos de los lineEdit y comboBox
         nombre = self.le_nombre_nueva.text()
         # cantidad = self.ventana_nueva_materia_prima.le_cantidad.text()
+        proveedor = int(self.obtener_clave_principal_proveedor())
+        
+        if self.mp_existe(nombre):
+            
+            print('Ya existe la materia prima')
+            # Pop up indicando que ya existe la materia prima
+            
+            return
+        
+        
 
-        proveedor = int(self.obtener_clave_principal())
-
-        # Crear y preparacion de la sentencia sql
+        # Crear y preparacion de la sentencia sql para insertar materia prima
         query = QSqlQuery()
         query.prepare(
-            f'insert into materias_primas (nombre_mp,cantidad_mp, proveedor_mp) values (:nombre, :cantidad,:proveedor)')
+            f'insert into materias_primas (nombre_mp) values (:nombre)')
 
         query.bindValue(":nombre", nombre)
-        # query.bindValue(":cantidad", cantidad)
-        query.bindValue(":proveedor", proveedor)
-
         query.exec()
+        
+        # # Crear y preparacion de la sentencia sql para insertar en matprimas_proveedores
+        # query_mat_prov = QSqlQuery()
+        # query_mat_prov.prepare(
+        #     f'insert into matprimas_proveedores (id_mp_mpprov,id_prov_mpprov) values (:nombre,:proveedor)')
+
+        # query_mat_prov.bindValue(":nombre", nombre)
+        # query_mat_prov.bindValue(":proveedor", proveedor)
+
+        # query_mat_prov.exec()
+        
 
         self.tabWidget.setCurrentIndex(0)
-        self.model.select()
+        
+        self.ventana_mp.initial_query.exec("SELECT * FROM materias_primas where activo_mp=true order by nombre_mp asc")
+        self.ventana_mp.model.setQuery(self.ventana_mp.initial_query)
+        self.ventana_mp.tv_mat_primas.selectRow(0)
+        self.close()
+        
+        # self.model.select()
 
         self.le_nombre_nueva.setText('')
         self.cb_proveedor_nueva.setCurrentIndex(-1)

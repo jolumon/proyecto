@@ -2,6 +2,7 @@ from PySide6.QtSql import QSqlQuery, QSqlTableModel, QSqlQueryModel
 from PySide6.QtWidgets import QWidget, QAbstractItemView, QHeaderView, QMessageBox
 from materias_primas.view.ui_materias_primas_detalle2 import Ui_Form
 from PySide6.QtCore import Qt
+from auxiliares import VentanaEmergenteBorrar
 
 
 class VentanaDetalle(QWidget, Ui_Form):
@@ -124,19 +125,30 @@ class VentanaDetalle(QWidget, Ui_Form):
         
 
     def borrar_mp(self):
+        
+        ventana_confirmacion = VentanaEmergenteBorrar()
+        respuesta = ventana_confirmacion.exec()
 
-        codigo = int(self.le_codigo_det.text())
-        # print(type(codigo))
-        query = QSqlQuery()
-        query.prepare(
-            "DELETE FROM materias_primas WHERE id_mp=:codigo")
-        # query.bindValue(":nombre", nombre)
-        query.bindValue(":codigo", codigo)
-        query.exec()
+        if respuesta:
 
-        self.ventana_mp.model.select()
+            codigo = int(self.le_codigo_det.text())
+            # print(type(codigo))
+            query = QSqlQuery()
+            query.prepare(
+                "DELETE FROM materias_primas WHERE id_mp=:codigo")
+            # query.bindValue(":nombre", nombre)
+            query.bindValue(":codigo", codigo)
+            query.exec()
+            
+            self.ventana_mp.initial_query.exec("SELECT * FROM materias_primas where activo_mp=true order by id_mp asc")
+            self.ventana_mp.model.setQuery(self.ventana_mp.initial_query)
+            self.ventana_mp.tv_mat_primas.selectRow(0)
+            self.close()
+            
 
-        self.close()
+            # self.ventana_mp.model.select()
+
+            # self.close()
         # self.tabWidget.setCurrentIndex(0)
         # self.tableView.selectRow(0)
 
@@ -151,26 +163,35 @@ class VentanaDetalle(QWidget, Ui_Form):
         # codigo = self.model.index(fila, 0).data()->Aquí no conozco fila, tendría que hacerla global
         nombre = self.le_nombre_det.text()
         cantidad = self.le_cantidad_det.text()
-        proveedor = int(self.le_proveedor_det.text())
+        # proveedor = int(self.le_proveedor_det.text())
 
         print(type(codigo))
-        print(f'{codigo},{nombre},{cantidad},{proveedor}')
+        print(f'{codigo},{nombre},{cantidad}')
 
         query = QSqlQuery()
 
         query.prepare(
-            f'UPDATE materias_primas SET nombre_mp=:nombre,cantidad_mp=:cantidad, proveedor_mp=:proveedor WHERE id_mp=:codigo')
+            f'UPDATE materias_primas SET nombre_mp=:nombre,cantidad_mp=:cantidad WHERE id_mp=:codigo')
+        # query.prepare(
+        #     f'UPDATE materias_primas SET nombre_mp=:nombre,cantidad_mp=:cantidad, proveedor_mp=:proveedor WHERE id_mp=:codigo')
 
         query.bindValue(":codigo", codigo)
         query.bindValue(":nombre", nombre)
         query.bindValue(":cantidad", cantidad)
-        query.bindValue(":proveedor", proveedor)
+        # query.bindValue(":proveedor", proveedor)
 
         query.exec()
-
-        self.ventana_mp.model.select()
-
+        
+        
+        self.ventana_mp.initial_query.exec("SELECT * FROM materias_primas where activo_mp=true order by nombre_mp asc")
+        self.ventana_mp.model.setQuery(self.ventana_mp.initial_query)
+        self.ventana_mp.tv_mat_primas.selectRow(0)
         self.close()
+        
+
+        # self.ventana_mp.model.select()
+
+        # self.close()
 
     # def muestra_entradas_materia_prima(self):
     #     codigo = int(self.le_codigo.text())
