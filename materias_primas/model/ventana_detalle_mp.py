@@ -30,23 +30,6 @@ class VentanaDetalle(QWidget, Ui_Form):
                 self.diccionario_proveedores_entrada[nombre] = proveedor_id
 
         self.cb_proveedor_entrada.setCurrentIndex(-1)
-        
-        # Crear un model de tabla para mostrar los proveedores de la materia prima
-
-    #     codigo = int(self.le_codigo_det.text())
-    #     self.prov_query = QSqlQuery()
-    #     self.prov_query.prepare(
-    #             "select distinct p.id_prov,p.nombre_prov  from proveedores p inner join entradas ent on p.id_prov=ent.id_prov_ent inner join materias_primas mp on ent.id_mp_ent  = mp.id_mp where mp.id_mp =:codigo")
-
-    #     self.prov_query.bindValue(":codigo", codigo)
-    #     self.prov_query.exec()
-    #     self.model = QSqlQueryModel()
-    #     self.model.setQuery(self.prov_query)
-        
-    #    #Cabeceras de la tabla
-    #     cabeceras = ['Codigo','Nombre']
-    #     for i,cabecera in enumerate(cabeceras):
-    #         self.model.setHeaderData(i, Qt.Horizontal,cabecera )
 
         # Signals and Slots pestaña detalle
 
@@ -167,6 +150,12 @@ class VentanaDetalle(QWidget, Ui_Form):
 
         print(type(codigo))
         print(f'{codigo},{nombre},{cantidad}')
+        
+        if self.ventana_mp.mp_existe(nombre):
+            print('Ya existe la materia prima')
+            # Pop up indicando que ya existe la materia prima
+            
+            return
 
         query = QSqlQuery()
 

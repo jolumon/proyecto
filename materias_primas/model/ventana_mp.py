@@ -29,22 +29,8 @@ class VentanaMateriasPrimas(QWidget, Ui_Form):
         for i,cabecera in enumerate(cabeceras):
             self.model.setHeaderData(i, Qt.Horizontal,cabecera )
 
-        # # Crear un modelo de tabla
-
-        # self.model = QSqlTableModel()
-        # self.model.setTable('materias_primas')
-
-        # self.model.select()
-
-        # self.model.setQuery(
-        #     "SELECT * FROM materias_primas where activo_mp=true order by id_mp asc")
-        # self.model.setHeaderData(0, Qt.Horizontal, str("Código"))
-        # self.model.setHeaderData(1, Qt.Horizontal, str("Nombre"))
-        # self.model.setHeaderData(2, Qt.Horizontal, str("Cantidad total / kg"))
-        # # self.model.setHeaderData(3, Qt.Horizontal, str("Proveedor"))
-        # self.model.setHeaderData(3, Qt.Horizontal, str("Activo"))
-
- # Crear un filtro para la búsqueda
+        
+        # Crear un filtro para la búsqueda
         self.proxy_model_mp = QSortFilterProxyModel()
         self.proxy_model_mp.setSourceModel(self.model)
 
@@ -272,9 +258,9 @@ class VentanaMateriasPrimas(QWidget, Ui_Form):
 
         self.tabWidget.setCurrentIndex(0)
         
-        self.ventana_mp.initial_query.exec("SELECT * FROM materias_primas where activo_mp=true order by nombre_mp asc")
-        self.ventana_mp.model.setQuery(self.ventana_mp.initial_query)
-        self.ventana_mp.tv_mat_primas.selectRow(0)
+        self.initial_query.exec("SELECT * FROM materias_primas where activo_mp=true order by nombre_mp asc")
+        self.model.setQuery(self.ventana_mp.initial_query)
+        self.tv_mat_primas.selectRow(0)
         self.close()
         
         # self.model.select()
