@@ -20,7 +20,7 @@ class VentanaProveedor(QWidget, Ui_Form):
 
         self.initial_query = QSqlQuery()
         self.initial_query.exec(
-            "select * from proveedores where activo_prov=true order by id_prov")
+            "select * from proveedores where activo_prov=true order by nombre_prov")
         self.model = QSqlQueryModel()
         self.model.setQuery(self.initial_query)
 
@@ -147,7 +147,7 @@ class VentanaProveedor(QWidget, Ui_Form):
             self.tabWidget.setCurrentIndex(1)
 
             self.initial_query.exec(
-                "select * from proveedores where activo_prov=true order by id_prov")
+                "select * from proveedores where activo_prov=true order by nombre_prov")
             self.model.setQuery(self.initial_query)
 
             self.tv_proveedores.selectRow(0)

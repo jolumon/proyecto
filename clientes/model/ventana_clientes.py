@@ -20,7 +20,7 @@ class VentanaCliente(QWidget, Ui_Form):
 
         self.initial_query = QSqlQuery()
         self.initial_query.exec(
-            "select * from clientes where activo_cli=true order by id_cli")
+            "select * from clientes where activo_cli=true order by nombre_cli")
         self.model = QSqlQueryModel()
         self.model.setQuery(self.initial_query)
         
@@ -134,7 +134,7 @@ class VentanaCliente(QWidget, Ui_Form):
             self.tabWidget.setCurrentIndex(1)
 
             self.initial_query.exec(
-                "select * from clientes where activo_cli=true order by id_cli")
+                "select * from clientes where activo_cli=true order by nombre_cli")
             self.model.setQuery(self.initial_query)
             # self.model.select()
             # self.tv_clientes.reset()
@@ -184,7 +184,7 @@ class VentanaCliente(QWidget, Ui_Form):
 
             self.query_productos = QSqlQuery()
             self.query_productos.prepare(
-                "SELECT productos.id_prod,productos.nombre_prod, productos.linea_prod FROM productos INNER JOIN clientes on productos.cliente_prod=clientes.id_cli WHERE id_cli=:codigo ORDER BY productos.id_prod")
+                "SELECT productos.id_prod,productos.nombre_prod, productos.linea_prod FROM productos INNER JOIN clientes on productos.cliente_prod=clientes.id_cli WHERE id_cli=:codigo ORDER BY productos.nombre_prod")
             self.query_productos.bindValue(':codigo', codigo)
             self.query_productos.exec()
 

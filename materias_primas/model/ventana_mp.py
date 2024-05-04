@@ -123,7 +123,7 @@ class VentanaMateriasPrimas(QWidget, Ui_Form):
 
             self.query_productos = QSqlQuery()
             self.query_productos.prepare(
-                "SELECT productos.id_prod,productos.nombre_prod, productos.linea_prod FROM productos INNER JOIN clientes on productos.cliente_prod=clientes.id_cli WHERE id_cli=:codigo ORDER BY productos.id_prod")
+                "SELECT productos.id_prod,productos.nombre_prod, productos.linea_prod FROM productos INNER JOIN clientes on productos.cliente_prod=clientes.id_cli WHERE id_cli=:codigo ORDER BY productos.nombre_prod")
             self.query_productos.bindValue(':codigo', codigo)
             self.query_productos.exec()
 
@@ -259,9 +259,9 @@ class VentanaMateriasPrimas(QWidget, Ui_Form):
         self.tabWidget.setCurrentIndex(0)
         
         self.initial_query.exec("SELECT * FROM materias_primas where activo_mp=true order by nombre_mp asc")
-        self.model.setQuery(self.ventana_mp.initial_query)
+        self.model.setQuery(self.initial_query)
         self.tv_mat_primas.selectRow(0)
-        self.close()
+        # self.close()
         
         # self.model.select()
 
