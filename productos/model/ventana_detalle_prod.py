@@ -97,52 +97,59 @@ class VentanaDetalle(QWidget, Ui_Form):
 
     def add_fab(self):
         
-        codigo = int(self.le_codigo_det.text())
+        print (f'Mostrar pesada: {self.mostrar_pesada()}')
+        
+        if self.mostrar_pesada()==False:
+            print ("No se puede fabricar por falta de materias primas")
+        
+        else:                
+        
+            codigo = int(self.le_codigo_det.text())
 
-        self.de_fecha_fab.setDisplayFormat("dd-MM-yyyy")
-        self.de_fecha_cad_fab.setDisplayFormat("dd-MM-yyyy")
+            self.de_fecha_fab.setDisplayFormat("dd-MM-yyyy")
+            self.de_fecha_cad_fab.setDisplayFormat("dd-MM-yyyy")
 
-        fecha_fab = self.de_fecha_fab.date().toString("dd-MM-yyyy")
-        # print(f'{type(fecha_fab)}-{fecha_fab}')
-        fecha_cad_fab = self.de_fecha_cad_fab.date().toString("dd-MM-yyyy")
-        # print(f'{type(fecha_fab)}-{fecha_cad_fab}')
-        lote = self.le_lote_fab.text()
-        # print(f'{lote}')
-        equipo = self.obtener_clave_principal_equipo()
-        # print(f'{equipo}')
-        cantidad = int(self.le_cantidad_fab.text())
-        # print(f'{cantidad}')
+            fecha_fab = self.de_fecha_fab.date().toString("dd-MM-yyyy")
+            # print(f'{type(fecha_fab)}-{fecha_fab}')
+            fecha_cad_fab = self.de_fecha_cad_fab.date().toString("dd-MM-yyyy")
+            # print(f'{type(fecha_fab)}-{fecha_cad_fab}')
+            lote = self.le_lote_fab.text()
+            # print(f'{lote}')
+            equipo = self.obtener_clave_principal_equipo()
+            # print(f'{equipo}')
+            cantidad = int(self.le_cantidad_fab.text())
+            # print(f'{cantidad}')
 
-        query_add_fab = QSqlQuery()
-        query_add_fab.prepare(
-            f'insert into fabricaciones (id_prod_fab,fecha_fab, lote_fab,fecha_cad_fab, equipo_fab, cantidad_fab ) values (:id_prod_fab,:fecha_fab, :lote_fab,:fecha_cad_fab, :equipo_fab, :cantidad_fab )')
-        query_add_fab.bindValue(":id_prod_fab", codigo)
-        query_add_fab.bindValue(":fecha_fab", fecha_fab)
-        query_add_fab.bindValue(":lote_fab", lote)
-        query_add_fab.bindValue(":fecha_cad_fab", fecha_cad_fab)
-        query_add_fab.bindValue(":equipo_fab", equipo)
-        query_add_fab.bindValue(":cantidad_fab", cantidad)
+            query_add_fab = QSqlQuery()
+            query_add_fab.prepare(
+                f'insert into fabricaciones (id_prod_fab,fecha_fab, lote_fab,fecha_cad_fab, equipo_fab, cantidad_fab ) values (:id_prod_fab,:fecha_fab, :lote_fab,:fecha_cad_fab, :equipo_fab, :cantidad_fab )')
+            query_add_fab.bindValue(":id_prod_fab", codigo)
+            query_add_fab.bindValue(":fecha_fab", fecha_fab)
+            query_add_fab.bindValue(":lote_fab", lote)
+            query_add_fab.bindValue(":fecha_cad_fab", fecha_cad_fab)
+            query_add_fab.bindValue(":equipo_fab", equipo)
+            query_add_fab.bindValue(":cantidad_fab", cantidad)
 
-        # print(f'{codigo}-{str(self.de_fecha_fab.date().toString("dd/MM/yyyy"))}-{self.le_lote_fab.text()}-{str(self.de_fecha_cad_fab.date().toString())}-{self.cb_equipo_fab.currentText()}-{self.le_cantidad_fab.text()}')
+            # print(f'{codigo}-{str(self.de_fecha_fab.date().toString("dd/MM/yyyy"))}-{self.le_lote_fab.text()}-{str(self.de_fecha_cad_fab.date().toString())}-{self.cb_equipo_fab.currentText()}-{self.le_cantidad_fab.text()}')
 
-        query_add_fab.exec()
-        print('Añadida fabricación')
+            query_add_fab.exec()
+            print('Añadida fabricación')
 
-        self.ventana_producto.initial_query.exec(
-            "select p.id_prod,p.nombre_prod , p.linea_prod , c.nombre_cli  from productos p inner join clientes c on p.cliente_prod =c.id_cli  where p.activo_prod=true order by p.id_prod asc")
-        self.ventana_producto.model.setQuery(
-            self.ventana_producto.initial_query)
+            self.ventana_producto.initial_query.exec(
+                "select p.id_prod,p.nombre_prod , p.linea_prod , c.nombre_cli  from productos p inner join clientes c on p.cliente_prod =c.id_cli  where p.activo_prod=true order by p.nombre_prod asc")
+            self.ventana_producto.model.setQuery(
+                self.ventana_producto.initial_query)
 
-        self.close()
-        self.ventana_producto.tabWidget.setCurrentIndex(1)
-        self.ventana_producto.tv_productos.selectRow(0)
+            self.close()
+            self.ventana_producto.tabWidget.setCurrentIndex(1)
+            self.ventana_producto.tv_productos.selectRow(0)
 
     def mostrar_pesada(self):
         codigo = int(self.le_codigo_det.text())
         cantidad = int(self.le_cantidad_fab.text())
         
-        print(f'Codigo mostar_pesada:{codigo}')
-        print(f'Cantidad mostrar_pesada: {cantidad}')
+        # print(f'Codigo mostar_pesada:{codigo}')
+        # print(f'Cantidad mostrar_pesada: {cantidad}')
         # Crear un model de tabla
         self.weight_query = QSqlQuery()
         self.weight_query.prepare(
@@ -163,6 +170,25 @@ class VentanaDetalle(QWidget, Ui_Form):
         self.weight_query.bindValue(":id_prod_fab", codigo)
         self.weight_query.bindValue(":cantidad", cantidad)
         self.weight_query.exec()
+        
+
+        todo_true=True
+        
+        while self.weight_query.next() and todo_true:
+            print("Inside while loop")  # Debug print
+            cantidad_mp = self.weight_query.value(3)
+            calculado = self.weight_query.value(4)
+
+            print("cantidad_mp:", cantidad_mp)  # Debug print
+            print("calculado:", calculado)  # Debug print
+   
+            if cantidad_mp < calculado:
+                todo_true = False
+                print(todo_true)
+                  # No es necesario seguir iterando si ya encontramos un caso donde no se cumple la condición
+
+                
+
 
         self.weigth_model = QSqlQueryModel()
         self.weigth_model.setQuery(self.weight_query)
@@ -182,7 +208,16 @@ class VentanaDetalle(QWidget, Ui_Form):
         self.tv_detalle_new_fab.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
         self.tv_detalle_new_fab.show()
+        
+        # cantidad_mp = self.weight_query.value(3)
+        # calculado = self.weight_query.value(4)
+        # print("cantidad_mp:", cantidad_mp) 
+        # print("calculado:", calculado)  
+        
+        print(todo_true)
 
+        return todo_true
+        
 
     def obtener_clave_principal_equipo(self):
         nombre_seleccionado = self.cb_equipo_fab.currentText()
