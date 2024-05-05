@@ -19,7 +19,7 @@ class VentanaDetalle(QWidget, Ui_Form):
 
         query_equipos = QSqlQuery()
         query_equipos.prepare(
-            f'select id_equipo, nombre from equipos where activo = true order by id_equipo')
+            f'select id_eq, nombre_eq from equipos where activo_eq = true order by id_eq')
 
         if query_equipos.exec():
             while query_equipos.next():
@@ -36,7 +36,7 @@ class VentanaDetalle(QWidget, Ui_Form):
 
         query_clientes_actualizar = QSqlQuery()
         query_clientes_actualizar.prepare(
-            f'select id_clientes, nombre_clientes from clientes where activo=true order by id_clientes')
+            f'select id_cli, nombre_cli from clientes where activo_cli=true order by nombre_cli')
 
         if query_clientes_actualizar.exec():
             while query_clientes_actualizar.next():
@@ -79,7 +79,7 @@ class VentanaDetalle(QWidget, Ui_Form):
             query.exec()
 
             self.ventana_producto.initial_query.exec(
-                "select p.id_prod,p.nombre_prod , p.linea_prod , c.nombre_clientes  from productos p inner join clientes c on p.cliente_prod =c.id_clientes  where p.activo_prod=true order by p.id_prod asc")
+                "select p.id_prod,p.nombre_prod , p.linea_prod , c.nombre_cli  from productos p inner join clientes c on p.cliente_prod =c.id_cli  where p.activo_prod=true order by p.id_prod asc")
             self.ventana_producto.model.setQuery(
                 self.ventana_producto.initial_query)
 
@@ -121,7 +121,7 @@ class VentanaDetalle(QWidget, Ui_Form):
         print('Añadida fabricación')
 
         self.ventana_producto.initial_query.exec(
-            "select p.id_prod,p.nombre_prod , p.linea_prod , c.nombre_clientes  from productos p inner join clientes c on p.cliente_prod =c.id_clientes  where p.activo_prod=true order by p.id_prod asc")
+            "select p.id_prod,p.nombre_prod , p.linea_prod , c.nombre_cli  from productos p inner join clientes c on p.cliente_prod =c.id_cli  where p.activo_prod=true order by p.id_prod asc")
         self.ventana_producto.model.setQuery(
             self.ventana_producto.initial_query)
 
@@ -149,7 +149,7 @@ class VentanaDetalle(QWidget, Ui_Form):
 
         query_clientes_actualizar = QSqlQuery()
         query_clientes_actualizar.prepare(
-            f'select id_clientes, nombre_clientes from clientes where activo=true order by id_clientes')
+            f'select id_cli, nombre_cli from clientes where activo_cli=true order by nombre_cli')
 
         if query_clientes_actualizar.exec():
             while query_clientes_actualizar.next():
@@ -181,7 +181,7 @@ class VentanaDetalle(QWidget, Ui_Form):
         print(f'{type(nombre)}-{type(linea)}-{type(cliente_ids)}-{type(codigo)}')
         
         self.ventana_producto.initial_query.exec(
-            "select p.id_prod,p.nombre_prod , p.linea_prod , c.nombre_clientes  from productos p inner join clientes c on p.cliente_prod =c.id_clientes  where p.activo_prod=true order by p.id_prod asc")
+            "select p.id_prod,p.nombre_prod , p.linea_prod , c.nombre_cli  from productos p inner join clientes c on p.cliente_prod =c.id_cli  where p.activo_prod=true order by p.id_prod asc")
         self.ventana_producto.model.setQuery(
             self.ventana_producto.initial_query)
 

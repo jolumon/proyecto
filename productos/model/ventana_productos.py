@@ -19,7 +19,7 @@ class VentanaProducto(QWidget, Ui_Form):
 
         self.initial_query = QSqlQuery()
         self.initial_query.exec(
-            "select p.id_prod,p.nombre_prod , p.linea_prod , c.nombre_clientes  from productos p inner join clientes c on p.cliente_prod =c.id_clientes  where p.activo_prod=true order by p.id_prod asc")
+            "select p.id_prod,p.nombre_prod , p.linea_prod , c.nombre_cli  from productos p inner join clientes c on p.cliente_prod =c.id_cli  where p.activo_prod=true order by p.nombre_prod asc")
         self.model = QSqlQueryModel()
         self.model.setQuery(self.initial_query)
 
@@ -78,7 +78,7 @@ class VentanaProducto(QWidget, Ui_Form):
 
         query_clientes = QSqlQuery()
         query_clientes.prepare(
-            f'select id_clientes, nombre_clientes from clientes where activo=true order by id_clientes')
+            f'select id_cli, nombre_cli from clientes where activo_cli=true order by nombre_cli')
 
         if query_clientes.exec():
             while query_clientes.next():
@@ -168,7 +168,7 @@ class VentanaProducto(QWidget, Ui_Form):
             
             self.query_composicion = QSqlQuery()
             self.query_composicion.prepare(
-                "select mp.nombre_materia_prima materia_prima,c.porcentaje_mp_comp from materias_primas mp inner join composiciones c on mp.id_materia_prima = c.id_mp_comp inner join productos p on c.id_prod_comp = p.id_prod where p.id_prod = :codigo order by c.porcentaje_mp_comp desc")
+                "select mp.nombre_mp,c.porcentaje_mp_comp from materias_primas mp inner join composiciones c on mp.id_mp = c.id_mp_comp inner join productos p on c.id_prod_comp = p.id_prod where p.id_prod = :codigo order by c.porcentaje_mp_comp desc")
             self.query_composicion.bindValue(':codigo', codigo)
             self.query_composicion.exec()
 
@@ -208,10 +208,10 @@ class VentanaProducto(QWidget, Ui_Form):
         
             self.query_fabricaciones = QSqlQuery()
             self.query_fabricaciones.prepare(
-                "select f.fecha_fab ,f.lote_fab ,f.cantidad_fab  ,f.fecha_cad_fab,e.nombre  from productos p inner join fabricaciones f on p.id_prod = f.id_prod_fab inner join equipos e on f.equipo_fab = e.id_equipo where p.id_prod = :codigo order by f.fecha_fab desc")
+                "select f.fecha_fab ,f.lote_fab ,f.cantidad_fab  ,f.fecha_cad_fab,e.nombre_eq  from productos p inner join fabricaciones f on p.id_prod = f.id_prod_fab inner join equipos e on f.equipo_fab = e.id_eq where p.id_prod = :codigo order by f.fecha_fab desc")
             self.query_fabricaciones.bindValue(':codigo', codigo)
             self.query_fabricaciones.exec()
-
+#                select f.fecha_fab ,f.lote_fab ,f.cantidad_fab  ,f.fecha_cad_fab,e.nombre_eq  from productos p inner join fabricaciones f on p.id_prod = f.id_prod_fab inner join equipos e on f.equipo_fab = e.id_eq where p.id_prod = 1 order by f.fecha_fab desc
             # self.model2 = QSqlRelationalTableModel()
 
             self.model_fab = QSqlQueryModel()
@@ -283,7 +283,7 @@ class VentanaProducto(QWidget, Ui_Form):
         self.tabWidget.setCurrentIndex(1)
 
         self.initial_query.exec(
-                "select p.id_prod,p.nombre_prod , p.linea_prod , c.nombre_clientes  from productos p inner join clientes c on p.cliente_prod =c.id_clientes  where p.activo_prod=true order by p.id_prod asc")
+                "select p.id_prod,p.nombre_prod , p.linea_prod , c.nombre_cli  from productos p inner join clientes c on p.cliente_prod =c.id_cli  where p.activo_prod=true order by p.id_prod asc")
         self.model.setQuery(self.initial_query)
         
 
