@@ -157,7 +157,7 @@ class VentanaMateriasPrimas(QWidget, Ui_Form):
             # Se crea el modelo para mostrar los proveedores de la materia prima
             self.model4 = QSqlQueryModel()
             self.model4.setQuery(
-                f'select distinct p.id_prov,p.nombre_prov  from proveedores p inner join entradas ent on p.id_prov=ent.id_prov_ent inner join materias_primas mp on ent.id_mp_ent  = mp.id_mp where mp.id_mp = {codigo}')
+                f'select p.id_prov ,p.nombre_prov  from materias_primas mp inner join matprimas_proveedores mp2 on mp.id_mp =mp2.id_mp_mpprov inner join proveedores p on mp2.id_prov_mpprov = p.id_prov  where mp.id_mp={codigo}')
 
             self.model4.setHeaderData(0, Qt.Horizontal, str("Código"))
             self.model4.setHeaderData(1, Qt.Horizontal, str("Nombre"))

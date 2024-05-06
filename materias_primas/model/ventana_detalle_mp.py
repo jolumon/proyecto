@@ -17,11 +17,23 @@ class VentanaDetalle(QWidget, Ui_Form):
         
         # Mostrar proveedores en el comboBox de la pestaña entrada
         self.diccionario_proveedores_entrada = {}
+        
+        selected_index = self.ventana_mp.tv_mat_primas.currentIndex()
+        print(f'Selected index: {selected_index}')
+        if selected_index.isValid():
+            # Obtenemos el número de fila de la celda seleccionada
+            # print('Entra en el if del selected_index')
+            fila = selected_index.row()
+            print(f'Fila: {fila}')
 
+            codigo = self.ventana_mp.model.index(fila, 0).data()
+        
+        
         query_proveedores_entrada = QSqlQuery()
         query_proveedores_entrada.prepare(
-            f'select id_prov, nombre_prov from proveedores order by nombre_prov')
-
+            f'select p.id_prov ,p.nombre_prov  from materias_primas mp inner join matprimas_proveedores mp2 on mp.id_mp =mp2.id_mp_mpprov inner join proveedores p on mp2.id_prov_mpprov = p.id_prov  where mp.id_mp={codigo}')
+        # query_proveedores_entrada.bindValue(':codigo', codigo)
+        
         if query_proveedores_entrada.exec():
             while query_proveedores_entrada.next():
                 proveedor_id = query_proveedores_entrada.value(0)
