@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import QWidget, QTableView, QHeaderView
 
 from productos.view.ui_ventana_producto_detalle4 import Ui_Form
-from auxiliares import VentanaEmergenteBorrar
+from auxiliares import VentanaEmergenteBorrar,VentanaEmergenteFaltaMPs
 from PySide6.QtSql import QSqlQuery,QSqlQueryModel
 from PySide6.QtCore import Qt
 
@@ -101,6 +101,10 @@ class VentanaDetalle(QWidget, Ui_Form):
         
         if self.mostrar_pesada()==False:
             print ("No se puede fabricar por falta de materias primas")
+            ventana_falta_mp=VentanaEmergenteFaltaMPs()
+            respuesta = ventana_falta_mp.exec()
+            # self.close()
+
         
         else:                
         
@@ -278,17 +282,8 @@ class VentanaDetalle(QWidget, Ui_Form):
         self.close()
         self.ventana_producto.tabWidget.setCurrentIndex(1)
         self.ventana_producto.tv_productos.selectRow(0)
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        print(f'Actualizado')
+                
+        print(f'Actualizado') 
     
     def obtener_clave_principal(self):
         nombre_seleccionado = self.cb_cliente.currentText()
