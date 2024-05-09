@@ -160,7 +160,7 @@ class VentanaDetalle(QWidget, Ui_Form):
             """SELECT
                 mp.id_mp,
                 mp.nombre_mp,
-                c.porcentaje_mp_comp,
+                lu.lote_lubi as "Lote",
                 mp.cantidad_mp,
                 c.porcentaje_mp_comp / 100 * :cantidad,
                 mp.cantidad_mp>= c.porcentaje_mp_comp / 100 * :cantidad
@@ -168,6 +168,7 @@ class VentanaDetalle(QWidget, Ui_Form):
                     materias_primas mp
                 INNER JOIN
                     composiciones c ON mp.id_mp = c.id_mp_comp
+                inner join lotes_ubicados lu on mp.id_mp =lu.mp_lubi               
                 WHERE
                     c.id_prod_comp = :id_prod_fab 
                 ORDER BY c.porcentaje_mp_comp desc""")
@@ -197,7 +198,7 @@ class VentanaDetalle(QWidget, Ui_Form):
         self.weigth_model = QSqlQueryModel()
         self.weigth_model.setQuery(self.weight_query)
 
-        cabeceras_pesada = ['Código', 'Materia Prima', 'Porcentaje / %',
+        cabeceras_pesada = ['Código', 'Materia Prima', 'Lote',
                             'Stock / kg', 'Cantidad Necesaria / kg', 'Suficiente Materia Prima']
         for i, cabecera in enumerate(cabeceras_pesada):
             self.weigth_model.setHeaderData(i, Qt.Horizontal, cabecera)
