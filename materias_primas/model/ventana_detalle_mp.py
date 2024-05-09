@@ -163,12 +163,7 @@ class VentanaDetalle(QWidget, Ui_Form):
         print(type(codigo))
         print(f'{codigo},{nombre},{cantidad}')
         
-        if self.ventana_mp.mp_existe(nombre):
-            print('Ya existe la materia prima')
-            # Pop up indicando que ya existe la materia prima
-            
-            return
-
+      
         query = QSqlQuery()
 
         query.prepare(
@@ -188,61 +183,4 @@ class VentanaDetalle(QWidget, Ui_Form):
         self.ventana_mp.model.setQuery(self.ventana_mp.initial_query)
         self.ventana_mp.tv_mat_primas.selectRow(0)
         self.close()
-        
-
-        # self.ventana_mp.model.select()
-
-        # self.close()
-
-    # def muestra_entradas_materia_prima(self):
-    #     codigo = int(self.le_codigo.text())
-    #     print(f'Código: {codigo}')
-    #     self.model = QSqlQueryModel()
-    #     self.model.setQuery(
-    #         f'select e.fecha_ent_ent , e.lote_ent ,e.fecha_cad_ent ,e.cantidad_ent ,e.precio_ent ,p.nombre_prov from materias_primas mp inner join entradas e on mp.id_mp = e.id_mp_ent inner join proveedores p on p.id_prov = e.id_prov_ent where mp.id_mp = {codigo}')
-
-    #     self.model.setHeaderData(0, Qt.Horizontal, str("Fecha Entrada"))
-    #     self.model.setHeaderData(1, Qt.Horizontal, str("Lote"))
-    #     self.model.setHeaderData(2, Qt.Horizontal, str("Fecha Caducidad"))
-    #     self.model.setHeaderData(3, Qt.Horizontal, str("Cantidad / kg"))
-    #     self.model.setHeaderData(4, Qt.Horizontal, str("Precio"))
-    #     self.model.setHeaderData(5, Qt.Horizontal, str("Proveedor"))
-
-    #     # Crear una vista de tabla
-    #     self.tableView.setModel(self.model)
-    #     self.tableView.setEditTriggers(
-    #         QAbstractItemView.NoEditTriggers)  # Deshabilitar edición
-    #     # Seleccionar filas completas
-    #     self.tableView.setSelectionMode(QAbstractItemView.SingleSelection)
-    #     self.tableView.setSelectionBehavior(
-    #         QAbstractItemView.SelectRows)  # Seleccionar filas completas
-
-    #     # Configurar la vista de tabla
-    #     self.tableView.resizeRowsToContents()
-    #     self.tableView.resizeColumnsToContents()
-    #     self.tableView.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
     
-    # def muestra_proveedores_de_materia_prima(self):
-    #     codigo = int(self.le_codigo.text())
-    #     print(f'Código: {codigo}')
-    #     self.model_prov = QSqlQueryModel()
-    #     self.model_prov.setQuery(
-    #         f'select distinct p.id_prov,p.nombre_prov  from proveedores p inner join entradas ent on p.id_prov=ent.id_prov_ent inner join materias_primas mp on ent.id_mp_ent  = mp.id_mp where mp.id_mp = {codigo}')
-
-    #     self.model_prov.setHeaderData(0, Qt.Horizontal, str("Código"))
-    #     self.model_prov.setHeaderData(1, Qt.Horizontal, str("Nombre"))
-        
-
-    #     # Crear una vista de tabla
-    #     self.tv_provs_detalle_mp.setModel(self.model_prov)
-    #     self.tv_provs_detalle_mp.setEditTriggers(
-    #         QAbstractItemView.NoEditTriggers)  # Deshabilitar edición
-    #     # Seleccionar filas completas
-    #     self.tv_provs_detalle_mp.setSelectionMode(QAbstractItemView.SingleSelection)
-    #     self.tv_provs_detalle_mp.setSelectionBehavior(
-    #         QAbstractItemView.SelectRows)  # Seleccionar filas completas
-
-    #     # Configurar la vista de tabla
-    #     self.tv_provs_detalle_mp.resizeRowsToContents()
-    #     self.tv_provs_detalle_mp.resizeColumnsToContents()
-    #     self.tv_provs_detalle_mp.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)

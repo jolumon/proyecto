@@ -4,7 +4,7 @@ from PySide6.QtSql import QSqlTableModel, QSqlQuery, QSqlQueryModel
 from PySide6.QtCore import Qt, QSortFilterProxyModel,QDate
 from materias_primas.view.ui_materias_primas import Ui_Form
 from materias_primas.model.ventana_detalle_mp import VentanaDetalle
-
+from auxiliares import VentanaEmergenteBorrar,VentanaMPExistente
 
 
 class VentanaMateriasPrimas(QWidget, Ui_Form):
@@ -232,11 +232,13 @@ class VentanaMateriasPrimas(QWidget, Ui_Form):
             
             print('Ya existe la materia prima')
             # Pop up indicando que ya existe la materia prima
-            
+            ventana_mp_existente=VentanaMPExistente()
+            respuesta = ventana_mp_existente.exec()
+            self.cambia_pestaña()
+                        
             return
+            
         
-        
-
         # Crear y preparacion de la sentencia sql para insertar materia prima
         query = QSqlQuery()
         query.prepare(
