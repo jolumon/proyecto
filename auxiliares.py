@@ -63,7 +63,7 @@ class VentanaEmergenteFaltaMPs(QDialog):
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
 
-        self.layout.addWidget(QLabel("Falta algun componente de la composicioñin"))
+        self.layout.addWidget(QLabel("Falta algún componente de la composición"))
 
         self.botones = QDialogButtonBox(
             QDialogButtonBox.Ok)
@@ -82,6 +82,24 @@ class VentanaMPExistente(QDialog):
         self.setLayout(self.layout)
 
         self.layout.addWidget(QLabel("Ya existe esta materia prima"))
+
+        self.botones = QDialogButtonBox(
+            QDialogButtonBox.Ok)
+
+        self.botones.accepted.connect(self.accept)
+        # self.botones.rejected.connect(self.reject)
+
+        self.layout.addWidget(self.botones)
+        
+class VentanaFaltanDatos(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Atención")
+
+        self.layout = QVBoxLayout()
+        self.setLayout(self.layout)
+
+        self.layout.addWidget(QLabel("Faltan datos por introducir"))
 
         self.botones = QDialogButtonBox(
             QDialogButtonBox.Ok)
