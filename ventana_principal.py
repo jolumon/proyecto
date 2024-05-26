@@ -8,7 +8,7 @@ from PySide6.QtWidgets import QMainWindow, QApplication
 from PySide6.QtGui import QCloseEvent
 from PySide6.QtCore import Qt
 from ui_ventana_principal4 import Ui_MainWindow
-from conexion import Conexion
+from conexion_v3 import Conexion
 # from qt_material import apply_stylesheet
 
 
