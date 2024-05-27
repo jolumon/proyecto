@@ -3,6 +3,7 @@ from PySide6.QtSql import QSqlDatabase, QSqlQuery
 
 class Conexion:
     def __init__(self):
+        #DATABASE_URL='postgresql://postgres:7taYLsi4hFrE@ep-wandering-sound-a2wgvsk5.eu-central-1.aws.neon.tech/labERP_dam?sslmode=require'
         self.db = QSqlDatabase.addDatabase('QPSQL')
         self.db.setDatabaseName('laberp_v3')
         self.db.setHostName('localhost')
@@ -11,7 +12,8 @@ class Conexion:
         self.db.setUserName('')
         self.db.setPassword('')
        
-    
+    # DATABASE_URL=postgres://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require
+    # postgresql://postgres:7taYLsi4hFrE@ep-wandering-sound-a2wgvsk5.eu-central-1.aws.neon.tech/labERP_dam?sslmode=require
     def conectar(self):
         if self.db.open()==True:
             print('Base de datos abierta correctamente')
