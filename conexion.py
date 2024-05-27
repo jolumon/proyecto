@@ -8,8 +8,8 @@ class Conexion:
         self.db.setHostName('localhost')
         #self.db.setHostName(DATABASE_URL)
         self.db.setPort(5432)
-        self.db.setUserName('postgres')
-        self.db.setPassword('postgres')
+        self.db.setUserName('')
+        self.db.setPassword('')
        
     def conectar(self):
         if self.db.open()==True:
