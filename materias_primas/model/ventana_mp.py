@@ -2,7 +2,7 @@ from typing import Optional
 from PySide6.QtWidgets import QWidget, QAbstractItemView, QHeaderView, QTableView 
 from PySide6.QtSql import QSqlTableModel, QSqlQuery, QSqlQueryModel
 from PySide6.QtCore import Qt, QSortFilterProxyModel,QDate
-from materias_primas.view.ui_materias_primas2 import Ui_Form
+from materias_primas.view.ui_materias_primas3 import Ui_Form
 from materias_primas.model.ventana_detalle_mp import VentanaDetalle
 from auxiliares import VentanaEmergenteBorrar,VentanaMPExistente
 
