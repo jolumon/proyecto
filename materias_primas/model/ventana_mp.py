@@ -2,7 +2,7 @@ from typing import Optional
 from PySide6.QtWidgets import QWidget, QAbstractItemView, QHeaderView, QTableView 
 from PySide6.QtSql import QSqlTableModel, QSqlQuery, QSqlQueryModel
 from PySide6.QtCore import Qt, QSortFilterProxyModel,QDate
-from materias_primas.view.ui_materias_primas import Ui_Form
+from materias_primas.view.ui_materias_primas2 import Ui_Form
 from materias_primas.model.ventana_detalle_mp import VentanaDetalle
 from auxiliares import VentanaEmergenteBorrar,VentanaMPExistente
 
@@ -74,7 +74,55 @@ class VentanaMateriasPrimas(QWidget, Ui_Form):
                 self.diccionario_proveedores[nombre] = proveedor_id
 
         self.cb_proveedor_nueva.setCurrentIndex(-1)
+        
+    ###############################################################################33
+        #Nueva pestaña de materias primas
+        
+        # Crear un model de tabla
 
+        self.entradas_query = QSqlQuery()
+        self.entradas_query.exec(
+            "select e.id_ent ,mp.nombre_mp, e.lote_ent ,e.fecha_ent_ent ,e.cantidad_ent ,p.nombre_prov  from entradas e inner join matprimas_proveedores mp2 on e.id_mp_ent =mp2.id_mp_mpprov and e.id_prov_ent = mp2.id_prov_mpprov inner join materias_primas mp on mp2.id_mp_mpprov = mp.id_mp inner join proveedores p on p.id_prov =mp2.id_mp_mpprov order by e.fecha_ent_ent desc")
+        self.model_ent = QSqlQueryModel()
+        self.model_ent.setQuery(self.entradas_query)
+        
+       #Cabeceras de la tabla
+        cabeceras = ['Codigo','Nombre','Lote','Fecha entrada','Cantidad / kg','Proveedor']
+        for i,cabecera in enumerate(cabeceras):
+            self.model_ent.setHeaderData(i, Qt.Horizontal,cabecera )
+
+        
+        # Crear un filtro para la búsqueda
+        self.proxy_model_mp_ent = QSortFilterProxyModel()
+        self.proxy_model_mp_ent.setSourceModel(self.model_ent)
+
+        # Crear un cuadro de texto para la búsqueda
+
+        self.le_buscar_mp.setPlaceholderText("Buscar por nombre...")
+        self.le_buscar_mp.textChanged.connect(self.filter)
+
+        # Crear una tabla para mostrar los datos
+
+        self.tv_entradas_list.setModel(self.proxy_model_mp_ent)
+        self.tv_entradas_list.setSelectionBehavior(QTableView.SelectRows)
+        self.tv_entradas_list.setSelectionMode(QTableView.SingleSelection)
+
+        # Crear la vista de tabla y establecer el modelo
+        # self.tv_mat_primas.setModel(self.model)
+        self.tv_entradas_list.setEditTriggers(
+            QAbstractItemView.NoEditTriggers)  # Deshabilitar edición
+        self.tv_entradas_list.setSelectionMode(
+            QAbstractItemView.SingleSelection)  # Seleccionar filas completas
+        self.tv_entradas_list.setSelectionBehavior(
+            QAbstractItemView.SelectRows)  # Seleccionar filas completas
+        self.tv_entradas_list.selectRow(0)
+        # Configurar la vista de tabla
+        self.tv_entradas_list.resizeColumnsToContents()
+        self.tv_entradas_list.resizeRowsToContents()
+        self.tv_entradas_list.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        
+    #Fin nueva pestaña materias primas
+##########################################################################################
         # Signal and Slots para pestaña Nueva
         self.btn_guardar_nueva_mp.clicked.connect(self.guardar_nueva_mp)
         self.btn_cancelar_nueva_mp.clicked.connect(self.cambia_pestaña)

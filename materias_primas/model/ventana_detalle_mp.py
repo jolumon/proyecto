@@ -126,15 +126,30 @@ class VentanaDetalle(QWidget, Ui_Form):
 
         if respuesta:
 
+            
             codigo = int(self.le_codigo_det.text())
             # print(type(codigo))
-            query = QSqlQuery()
-            query.prepare(
-                "DELETE FROM materias_primas WHERE id_mp=:codigo")
-            # query.bindValue(":nombre", nombre)
-            query.bindValue(":codigo", codigo)
-            query.exec()
             
+            query_busqueda=QSqlQuery()
+            query_busqueda.prepare(
+                "select * from matprimas_proveedores where id_mp_mpprov=:codigo")
+            query_busqueda.bindValue(":codigo", codigo)
+            query_busqueda.exec()
+            
+            if query_busqueda:
+                query_actualizar=QSqlQuery()
+                query_actualizar.prepare(
+                    "update materias_primas set activo_mp=false where id_mp=:codigo")
+                query_actualizar.bindValue(":codigo", codigo)
+                query_actualizar.exec()
+            else:
+                query = QSqlQuery()
+                query.prepare(
+                    "DELETE FROM materias_primas WHERE id_mp=:codigo")
+                # query.bindValue(":nombre", nombre)
+                query.bindValue(":codigo", codigo)
+                query.exec()
+                
             self.ventana_mp.initial_query.exec("SELECT * FROM materias_primas where activo_mp=true order by id_mp asc")
             self.ventana_mp.model.setQuery(self.ventana_mp.initial_query)
             self.ventana_mp.tv_mat_primas.selectRow(0)
