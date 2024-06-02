@@ -1,6 +1,7 @@
 import sys
 
 from clientes.model.ventana_clientes import VentanaCliente
+# from entradas.model.ventana_entradas import VentanaEntrada
 from materias_primas.model.ventana_mp import VentanaMateriasPrimas
 from proveedores.model.ventana_proveedores import VentanaProveedor
 from productos.model.ventana_productos import VentanaProducto
@@ -32,6 +33,7 @@ class VentanaPrincipal(QMainWindow, Ui_MainWindow):
         self.btn_materias_primas.clicked.connect(self.ventana_materias_primas)
         self.btn_productos.clicked.connect(self.ventana_productos)
         self.btn_proveedores.clicked.connect(self.ventana_proveedores)
+        self.btn_proveedores.clicked.connect(self.ventana_entradas)
 
     def ventana_clientes(self):
         """
@@ -65,6 +67,15 @@ class VentanaPrincipal(QMainWindow, Ui_MainWindow):
         """
         self.ventana_proveedor = VentanaProveedor(self)
         self.ventana_proveedor.show()
+        self.hide()
+        
+    def ventana_entradas(self):
+        """
+        Crea una ventana del tipo VentanaCliente y la muestra. Oculta la ventana principal.
+        """
+        # self.hide()
+        self.ventana_entrada = VentanaEntrada(self)
+        self.ventana_entrada.show()
         self.hide()
 
     def closeEvent(self, event):

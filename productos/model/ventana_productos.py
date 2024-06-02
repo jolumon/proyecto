@@ -207,8 +207,14 @@ class VentanaProducto(QWidget, Ui_Form):
             
         
             self.query_fabricaciones = QSqlQuery()
+            # self.query_fabricaciones.prepare(
+            #     "select f.fecha_fab ,f.lote_fab ,f.cantidad_fab  ,f.fecha_cad_fab,e.nombre_eq  from productos p inner join fabricaciones f on p.id_prod = f.id_prod_fab inner join equipos e on f.equipo_fab = e.id_eq where p.id_prod = :codigo order by f.fecha_fab desc")
             self.query_fabricaciones.prepare(
-                "select f.fecha_fab ,f.lote_fab ,f.cantidad_fab  ,f.fecha_cad_fab,e.nombre_eq  from productos p inner join fabricaciones f on p.id_prod = f.id_prod_fab inner join equipos e on f.equipo_fab = e.id_eq where p.id_prod = :codigo order by f.fecha_fab desc")
+                """select of2.fecha_ofab ,p.nombre_prod,of2.lote_ofab ,of2.cantidad_ofab ,e.nombre_eq  from ordenes_fab of2 
+                    inner join productos p on of2.id_prod_ofab =p.id_prod
+                    inner join equipos e on e.id_eq =of2.equipo_ofab 
+                    where of2.id_prod_ofab = 1 
+                    order by of2.fecha_ofab desc""")
             self.query_fabricaciones.bindValue(':codigo', codigo)
             self.query_fabricaciones.exec()
 #                select f.fecha_fab ,f.lote_fab ,f.cantidad_fab  ,f.fecha_cad_fab,e.nombre_eq  from productos p inner join fabricaciones f on p.id_prod = f.id_prod_fab inner join equipos e on f.equipo_fab = e.id_eq where p.id_prod = 1 order by f.fecha_fab desc
@@ -218,9 +224,10 @@ class VentanaProducto(QWidget, Ui_Form):
             self.model_fab.setQuery(self.query_fabricaciones)
 
             self.model_fab.setHeaderData(0, Qt.Horizontal, str("Fecha fabricación"))
-            self.model_fab.setHeaderData(1, Qt.Horizontal, str("Lote"))
-            self.model_fab.setHeaderData(2, Qt.Horizontal, str("Cantidad"))
-            self.model_fab.setHeaderData(3, Qt.Horizontal, str("Caducidad"))
+            self.model_fab.setHeaderData(1, Qt.Horizontal, str("Producto"))
+            self.model_fab.setHeaderData(2, Qt.Horizontal, str("Lote"))
+            self.model_fab.setHeaderData(3, Qt.Horizontal, str("Cantidad"))
+            # self.model_fab.setHeaderData(3, Qt.Horizontal, str("Caducidad"))
             self.model_fab.setHeaderData(4, Qt.Horizontal, str("Equipo"))
             # self.model2.setHeaderData(2, Qt.Horizontal, str("Linea"))
 
